@@ -1,0 +1,8 @@
+[
+    {
+        "id": "cottage-capers",
+        "name": "Cottage Capers",
+        "brokerUrl": "192.168.20.100",
+        "topic": "cottage-capers"
+    }
+]
