@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { EscapeRoom } from "../types/EscapeRoom";
+import type { EscapeRoom } from "../types/escape-room";
 import { getEscapeRooms } from "../api/get-escape-rooms";
 
 export default function RoomsTest() {

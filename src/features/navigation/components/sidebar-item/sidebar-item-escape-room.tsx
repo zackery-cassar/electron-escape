@@ -5,13 +5,13 @@ type Flag = 'none' | 'warning' | 'critical'
 
 interface SidebarItemEscapeRoomProps {
   name: string
-  time: string
-  progress: number
-  color: string
+  time?: string
+  progress?: number
+  color?: string
   manualFlag?: Flag
 }
 
-export function SidebarItemEscapeRoom({ name, time, progress, color, manualFlag }: SidebarItemEscapeRoomProps) {
+export function SidebarItemEscapeRoom({ name, time = "--:--", progress = 0, color = "oklch(27.9% 0.041 260.031)", manualFlag }: SidebarItemEscapeRoomProps) {
 	const flag = manualFlag ?? computeFlag(time, progress)
 	
   return (
