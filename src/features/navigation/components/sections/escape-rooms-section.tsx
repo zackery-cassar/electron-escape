@@ -2,6 +2,7 @@ import { useGetEscapeRooms } from "@/features/escape-rooms/hooks/use-get-escape-
 import { SidebarItemEscapeRoom } from "../sidebar-item/sidebar-item-escape-room";
 import { SidebarSection } from "../sidebar-section";
 import { DotPulse } from "@/components/ui/loaders/dot-pulse";
+import { Link } from "react-router";
 
 
 export function EscapeRoomsSection() {
@@ -18,7 +19,9 @@ export function EscapeRoomsSection() {
 			
 			{/* List of all the Escape Rooms */}
 			{escapeRooms.map((escapeRoom) => (
-				<SidebarItemEscapeRoom key={escapeRoom.id} name={escapeRoom.name} time="--:--" progress={50} color={escapeRoom.color} />
+				<Link key={escapeRoom.id} to={`/${escapeRoom.id}`}>
+					<SidebarItemEscapeRoom key={escapeRoom.id} name={escapeRoom.name} time="--:--" progress={50} color={escapeRoom.color} />
+				</Link>
 			))}
 
 		</SidebarSection>

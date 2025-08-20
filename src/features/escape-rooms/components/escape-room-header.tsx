@@ -1,7 +1,8 @@
 import { TriToggle } from "@/components/ui/tri-toggle"
+import type { EscapeRoom } from "../types/escape-room"
 
-export function EscapeRoomHeader() {
-    const isOnline: boolean = true
+export function EscapeRoomHeader({ escapeRoom }: { escapeRoom: EscapeRoom}) {
+    const isOnline: boolean = false
 
     return (
         <div className="w-full h-32 px-12 border-b flex items-center justify-between">
@@ -10,7 +11,7 @@ export function EscapeRoomHeader() {
             <div className="flex flex-col gap-2">
                 
                 {/* Escape Room Name */}
-                <h1 className="text-3xl font-semibold text-slate-800">Cottage Capers</h1>
+                <h1 className="text-3xl font-semibold text-slate-800">{escapeRoom.name}</h1>
                 <div className="flex gap-5 items-center">
 
                     {/* Online/Offline Status Indiciator */}
