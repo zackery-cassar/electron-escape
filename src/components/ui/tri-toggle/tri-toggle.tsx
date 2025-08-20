@@ -1,7 +1,9 @@
 import clsx from "clsx"
 import { useEffect, useLayoutEffect, useState, useRef } from "react"
 
-export function TriToggle({ options, tooltips, defaultIndex = 0}: { options: [string, string, string], tooltips?: [string, string, string], defaultIndex?: number}) {
+
+
+export function TriToggle({ options, tooltips, colors, defaultIndex = 0}: { options: [string, string, string], tooltips?: [string, string, string], colors?: [string, string, string], defaultIndex?: number}) {
     const [i, setI] = useState<number>(defaultIndex)
     const containerRef = useRef<HTMLDivElement | null>(null)
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -43,7 +45,10 @@ export function TriToggle({ options, tooltips, defaultIndex = 0}: { options: [st
 
             {/* Dynamic Thumb */}
             <div
-                className="absolute top-0.5 bottom-0.5 rounded-full bg-white shadow-sm ring-slate-200 transition-all duration-300"
+                className={clsx(
+                    "absolute top-0.5 bottom-0.5 rounded-full shadow-sm ring-slate-200 transition-all duration-300",
+                    colors?.[i] ?? "bg-white"
+                )}
                 style={{ left: thumb.left, width: thumb.width}}
             />
             {options.map((option, index) => (

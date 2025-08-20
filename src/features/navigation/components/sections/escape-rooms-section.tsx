@@ -20,7 +20,7 @@ export function EscapeRoomsSection() {
 			{/* List of all the Escape Rooms */}
 			{escapeRooms.map((escapeRoom) => (
 				<Link key={escapeRoom.id} to={`/${escapeRoom.id}`}>
-					<SidebarItemEscapeRoom key={escapeRoom.id} name={escapeRoom.name} time="--:--" progress={50} color={escapeRoom.color} />
+					<SidebarItemEscapeRoom key={escapeRoom.id} name={escapeRoom.name} time="50:00" progress={70} color={escapeRoom.color} />
 				</Link>
 			))}
 

@@ -21,7 +21,11 @@ export function EscapeRoomHeader({ escapeRoom }: { escapeRoom: EscapeRoom}) {
                     </div>
 
                     {/* Hint Mode Selector */}
-                    <TriToggle options={["No Hints","Nudge Occasionally","On Request"]} tooltips={["Don't send any hints at all.", "Send a hint if they seem like they are struggling.", "Only send a hint if they ask for one."]} defaultIndex={2} />
+                    <TriToggle
+                        options={["No Hints","Nudge Occasionally","On Request"]}
+                        tooltips={["Don't send any hints at all.", "Send a hint if they seem like they are struggling.", "Only send a hint if they ask for one."]}
+                        colors={["bg-red-300", "bg-yellow-100", "bg-green-300"]}
+                        defaultIndex={2} />
                 </div>
             </div>
 
