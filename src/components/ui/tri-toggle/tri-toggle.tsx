@@ -41,12 +41,12 @@ export function TriToggle({ options, tooltips, colors, defaultIndex = 0}: { opti
     return (
         <div
             ref={containerRef}
-            className="relative inline-flex items-center rounded-full bg-slate-100/70 ring-1 ring-slate-200 p-0.5 backdrop-blur">
+            className="relative inline-flex items-center rounded-md border bg-background border-input p-0.5 backdrop-blur">
 
             {/* Dynamic Thumb */}
             <div
                 className={clsx(
-                    "absolute top-0.5 bottom-0.5 rounded-full shadow-sm ring-slate-200 transition-all duration-300",
+                    "absolute top-0.5 bottom-0.5 rounded-md shadow-sm ring-slate-200 transition-all duration-300",
                     colors?.[i] ?? "bg-white"
                 )}
                 style={{ left: thumb.left, width: thumb.width}}
@@ -58,7 +58,7 @@ export function TriToggle({ options, tooltips, colors, defaultIndex = 0}: { opti
                     ref={setButtonRef(index)}
                     onClick={() => select(index)}
                     className={clsx(
-                        "relative z-10 px-2 text-[12px] font-medium rounded-full transition-colors cursor-pointer",
+                        "relative z-10 px-2 text-[12px] font-medium rounded-md transition-colors cursor-pointer",
                         index === i ? "text-slate-900" : "text-slate-600 hover:text-slate-800" 
                     )}
                 >
