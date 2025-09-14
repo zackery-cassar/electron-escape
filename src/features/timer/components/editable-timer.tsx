@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { formatDuration, parseDuration } from "../utils/time";
+import { formatDuration } from "../utils/time";
+import { isColon, nextDigitPosition, previousDigitPosition, replaceValueAtPosition } from "../utils/timer-input";
+import { useTimerInputEditor } from "../hooks/use-timer-input-editor";
 
 type Props = {
   value: number;
   onChange: (seconds: number) => void;
   className?: string;
   disabled?: boolean;
-  autoFocusOnEdit?: boolean;
 };
 
 export function EditableTimer({
@@ -14,132 +15,95 @@ export function EditableTimer({
   onChange,
   className,
   disabled,
-  autoFocusOnEdit = true,
 }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(formatDuration(value));
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const { isEditing, inputRef, onClick, commit, cancel } = useTimerInputEditor({ disabled, value, onChange, text: inputValue, setText: setInputValue })
 
   // Keep inputValue in sync if parent changes value while not editing
   useEffect(() => {
     if (!isEditing) setInputValue(formatDuration(value));
   }, [value, isEditing]);
 
-  // Confirm the input
-  const commit = () => {
-    const parsed = parseDuration(inputValue);
-    if (parsed != null) onChange(parsed);
-    setIsEditing(false);
-  };
-
-  // Cancel the input
-  const cancel = () => {
-    setInputValue(formatDuration(value));
-    setIsEditing(false);
-  };
-
   // Handle key press
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    // Make sure we can get the current input reference.
+    const input = inputRef.current
+    if (!input) return
+
+    // Get the current cursor position and value
+    const cursorPosition = input.selectionStart ?? 0
+    const currentValue = inputValue
+
+    // Confirm edit on Enter, cancel on Escape
     if (e.key === "Enter") commit();
     if (e.key === "Escape") cancel();
 
-    // Handle deleting the keys and zeroing out the digits
-    if (e.key === "Backspace" || e.key === "Delete") {
-      // Prevent default backspace/delete behavior
-      e.preventDefault()
+    // Backspace: zero out the previous digit.
+    if(e.key === "Backspace") {
+      e.preventDefault()  // Prevent default backspace behavior.
+
+      const position = previousDigitPosition(currentValue, cursorPosition)
+      if (position < 0) return // At the beginning, do nothing.
+
+      // Update the value.
+      const newValue = replaceValueAtPosition(currentValue, position, "0")
+      setInputValue(newValue)
+
+      // Move the cursor to the edited position.
+      setTimeout(() => input.setSelectionRange(position, position), 0)
+      return
+    }
       
-      // Get the current input element
-      const input = inputRef.current
-      if (!input) return
+    // Delete: zero out the next digit.
+    if(e.key === "Delete") {
+      e.preventDefault()  // Prevent default delete behavior.
 
-      // Get current value and cursor position
-      const cursorPos = input.selectionStart || 0
-      const currentValue = inputValue
+      const position = nextDigitPosition(currentValue, cursorPosition)
+      if (position >= currentValue.length) return // At the end, do nothing.
 
-      // Handle all the backspace key inputs
-      if(e.key === "Backspace") {
-        
-        // Get the previous cursor position to move to, accounting for the : in the string
-        let previousDigitPos = cursorPos - 1
-        while(previousDigitPos >= 0 && currentValue[previousDigitPos] === ":") previousDigitPos--
-        if(previousDigitPos < 0) return // If we are at the beginning or no digit found then don't do anything
+      // Update the value.
+      const newValue = replaceValueAtPosition(currentValue, position, "0")
+      setInputValue(newValue)
 
-        // Replace the digit at the found position with zero
-        const newValue = currentValue.substring(0, previousDigitPos) + "0" + currentValue.substring(previousDigitPos + 1);
-        setInputValue(newValue)
-
-        // Finally move the cursor to the position we just zeroed out
-        setTimeout(() => input.setSelectionRange(previousDigitPos, previousDigitPos), 0);
-      }
-      
-      // Handle all the delete key inputs
-      if(e.key === "Delete") {
-        let nextDigitPos = cursorPos
-        while(nextDigitPos <= currentValue.length && currentValue[nextDigitPos] === ":") nextDigitPos++
-        if(nextDigitPos >= currentValue.length) return // If we are at the end then don't do anything
-
-        // Replace the digit at the found position with zero
-        const newValue = currentValue.substring(0, nextDigitPos) + "0" + currentValue.substring(nextDigitPos + 1);
-        setInputValue(newValue)
-        
-        // Finally move the cursor to the position in front of the one we just zeroed out
-        setTimeout(() => {
-          let newCursorPos = nextDigitPos + 1
-          while(newCursorPos < newValue.length && newValue[newCursorPos] === ":") newCursorPos++
-          input.setSelectionRange(newCursorPos, newCursorPos)
-        }, 0);
-      }
+      // Move the cursor after the edited position.
+      setTimeout(() => {
+        let newPosition = position + 1
+        while(newPosition < newValue.length && isColon(newValue, newPosition)) newPosition++
+        input.setSelectionRange(newPosition, newPosition)
+      }, 0)
+      return
     }
 
-    // Handles all digit key inputs
+    // Handle digit key input: overwrite the next digit.
     if (/^\d$/.test(e.key)) {
       e.preventDefault();
 
-      // Get the current input element
-      const input = inputRef.current
-      if (!input) return
+      const position = nextDigitPosition(currentValue, cursorPosition)
+      if (position >= currentValue.length) return // At the end, do nothing.
 
-      // Get current value and cursor position
-      const selectionStart = input.selectionStart || 0
-      const currentValue = inputValue
-
-      const cursorPos = selectionStart
-      let nextDigitPos = cursorPos
-      while(nextDigitPos < currentValue.length && currentValue[nextDigitPos] === ":") nextDigitPos++
-      if(nextDigitPos >= currentValue.length) return // If we are at the end then don't do anything
-
-      const newValue = currentValue.substring(0, nextDigitPos) + e.key + currentValue.substring(nextDigitPos + 1);
+      // Update the value
+      const newValue = replaceValueAtPosition(currentValue, position, e.key)
       setInputValue(newValue)
-
-      setTimeout(() => {
-        let newCursorPos = nextDigitPos + 1
-        while(newCursorPos < newValue.length && newValue[newCursorPos] === ":") newCursorPos++
-        input.setSelectionRange(newCursorPos, newCursorPos)
-      }, 0)
       
+      // Move the cursor after the edited position.
+      setTimeout(() => {
+        let newPosition = position + 1
+        while(newPosition < newValue.length && isColon(newValue, newPosition)) newPosition++
+        input.setSelectionRange(newPosition, newPosition)
+      }, 0)
+      return
     }
-
-
-
-
-
-  };
-
-  // Handle display click
-  const handleDisplayClick = () => {
-    if (disabled) return;
-    setIsEditing(true);
   };
 
   return (
     <div className={className}>
-      {/* {isEditing ? ( */}
       <input
+        disabled={disabled}
         ref={inputRef}
         type="text"
         value={inputValue}
         readOnly={!isEditing}
-        onClick={handleDisplayClick}
+        onClick={onClick}
         onBlur={commit}
         onKeyDown={handleInputKeyDown}
         placeholder="00:00:00"
@@ -148,7 +112,7 @@ export function EditableTimer({
             bg-transparent border-0 rounded text-center
             focus:outline-none focus:ring-0 focus:bg-muted/30
             transition-colors"
-        autoFocus={autoFocusOnEdit}
+        autoFocus
       />
     </div>
   );

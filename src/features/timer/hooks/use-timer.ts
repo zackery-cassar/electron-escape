@@ -15,6 +15,7 @@ type TimerControllers = {
 };
 
 export function useTimer(
+  id: string,
   options: TimerOptions = {}
 ): [number, boolean, TimerControllers] {
   const { defaultSeconds = 3600 } = options;

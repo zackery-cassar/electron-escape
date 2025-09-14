@@ -1,6 +1,7 @@
 import { ReactIcon } from "@/components/ui/icons/react-icon"
 import clsx from "clsx"
 
+
 type BrandSize = "sm" | "base" | "6xl"
 type BrandVariant = "full" | "text" | "icon"
 

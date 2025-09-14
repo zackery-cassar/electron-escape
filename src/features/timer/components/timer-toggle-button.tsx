@@ -13,7 +13,7 @@ export function TimerToggleButton({
       onClick={onToggle}
       size="1"
       variant="ghost"
-      className="h-6 w-6 p-0 rounded-full"
+      className="h-6 w-6 p-0 rounded-full cursor-pointer"
     >
       {isRunning ? (
         <Pause className="h-4 w-4 text-slate-800" />
