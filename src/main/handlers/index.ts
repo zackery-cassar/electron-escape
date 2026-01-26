@@ -1,0 +1,14 @@
+import { registerEscapeRoomHandlers } from './escape-rooms'
+import { registerTimerHandlers } from './timer'
+
+/**
+ * Register all IPC handlers
+ */
+export function registerAllHandlers(): void {
+  registerEscapeRoomHandlers()
+  registerTimerHandlers()
+  // Add more handler registrations here as you create them
+  // Example:
+  // registerPuzzleHandlers()
+  // registerEscapeRoomHandlers()
+}

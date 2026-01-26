@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+@import '@fontsource/inter';
+@import './animations.css';
+
+:root {
+  font-family: 'Inter';
+  user-select: none; /* Disable text selection by default */
+  color: white;
+}
