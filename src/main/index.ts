@@ -1,10 +1,10 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { config } from 'dotenv'
+import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { registerAllHandlers } from './handlers'
 import { initSupabase } from './services/supabase'
-import { config } from 'dotenv'
 
 // Load environment variables from .env file
 config({ quiet: true })
