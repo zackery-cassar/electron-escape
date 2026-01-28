@@ -1,4 +1,4 @@
-import { useEscapeRooms } from '@renderer/hooks/useEscapeRooms'
+import { useEscapeRooms } from '@renderer/store/venueStore'
 import { EscapeRoomItem } from '../items/EscapeRoomItem'
 import { SidebarSection } from '../SidebarSection'
 

@@ -1,16 +1,16 @@
 import { LoadingPage } from '@renderer/pages'
-import { useEscapeRoomStore } from '@renderer/store/escapeRoomStore'
+import { useFetchVenue, useLoading } from '@renderer/store/venueStore'
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './Router'
 
 export default function App(): React.JSX.Element {
-  const fetchRooms = useEscapeRoomStore((state) => state.fetchRooms)
-  const loading = useEscapeRoomStore((state) => state.loading)
+  const fetchVenue = useFetchVenue()
+  const loading = useLoading()
 
   useEffect(() => {
-    fetchRooms('413e635b-c94d-4205-9e39-e97756a7368d')
-  }, [fetchRooms])
+    fetchVenue('413e635b-c94d-4205-9e39-e97756a7368d')
+  }, [fetchVenue])
 
   if (loading) return <LoadingPage />
 

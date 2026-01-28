@@ -1,12 +1,14 @@
-import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { timerApi } from './api/timer'
+import { contextBridge } from 'electron'
 import { escapeRoomApi } from './api/escape-rooms'
+import { timerApi } from './api/timer'
+import { venueApi } from './api/venue'
 
 // Custom APIs for renderer
 const api = {
   timer: timerApi,
-  escapeRooms: escapeRoomApi
+  escapeRooms: escapeRoomApi,
+  venue: venueApi
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -1,9 +1,9 @@
-import { useEscapeRoom } from '@renderer/hooks/useEscapeRoom'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { EscapeRoomHeader } from './EscapeRoomHeader'
 import { PuzzleCard } from '@renderer/features/puzzles/components/PuzzleCard'
 import { HintBar } from '@renderer/features/hints/components/HintBar'
+import { useEscapeRoom } from '@renderer/store/venueStore'
 
 export function EscapeRoomPage(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()

@@ -1,11 +1,11 @@
-import { EscapeRoom } from '@shared/types/escape-room'
-import { getSupabase } from './supabase'
 import { State } from '@shared/types/state'
+import { Venue } from '@shared/types/venue'
+import { getSupabase } from './supabase'
 
 /**
- * Fetch all escape rooms with their puzzles and hints
+ * Fetch venue from the database.
  */
-export async function fetchEscapeRooms(venueId: string): Promise<EscapeRoom[]> {
+export async function fetchVenue(venueId: string): Promise<Venue | null> {
   const supabase = getSupabase()
 
   const { data: venue, error } = await supabase
@@ -19,30 +19,34 @@ export async function fetchEscapeRooms(venueId: string): Promise<EscapeRoom[]> {
     throw new Error(`Failed to fetch escape rooms: ${error.message}`)
   }
 
-  if (!venue || !venue.escape_rooms) return []
+  if (!venue) return null
 
   // Transform database format to application format
-  return venue.escape_rooms.map((room) => ({
-    id: room.id,
-    name: room.name,
-    state: State.UNKNOWN, // Runtime state, not stored in DB
-    connected: false, // Runtime state, not stored in DB
-    puzzles: (room.puzzles || [])
-      .sort((a, b) => a.order - b.order)
-      .map((puzzle) => ({
-        id: puzzle.id,
-        name: puzzle.name,
-        isTech: puzzle.is_tech,
-        state: State.UNKNOWN, // Runtime state, not stored in DB
-        connected: false, // Runtime state, not stored in DB
-        hints: (puzzle.hints || [])
-          .sort((a, b) => a.order - b.order)
-          .map((hint) => ({
-            id: hint.id,
-            title: hint.title,
-            content: hint.content,
-            order: hint.order
-          }))
-      }))
-  }))
+  return {
+    id: venue.id,
+    name: venue.name,
+    escapeRooms: venue.escape_rooms.map((room) => ({
+      id: room.id,
+      name: room.name,
+      state: State.UNKNOWN, // Runtime state, not stored in DB
+      connected: false, // Runtime state, not stored in DB
+      puzzles: (room.puzzles || [])
+        .sort((a, b) => a.order - b.order)
+        .map((puzzle) => ({
+          id: puzzle.id,
+          name: puzzle.name,
+          isTech: puzzle.is_tech,
+          state: State.UNKNOWN, // Runtime state, not stored in DB
+          connected: false, // Runtime state, not stored in DB
+          hints: (puzzle.hints || [])
+            .sort((a, b) => a.order - b.order)
+            .map((hint) => ({
+              id: hint.id,
+              title: hint.title,
+              content: hint.content,
+              order: hint.order
+            }))
+        }))
+    }))
+  }
 }
