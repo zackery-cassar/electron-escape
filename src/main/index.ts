@@ -7,7 +7,7 @@ import { initSupabase } from './services/supabase'
 import { config } from 'dotenv'
 
 // Load environment variables from .env file
-config()
+config({ quiet: true })
 
 function createWindow(): void {
   // Create the browser window.
