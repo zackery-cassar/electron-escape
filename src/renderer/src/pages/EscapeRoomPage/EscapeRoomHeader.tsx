@@ -24,9 +24,11 @@ export function EscapeRoomHeader({ room }: EscapeRoomHeaderProps): React.JSX.Ele
       {/* Center section */}
       <div className="flex flex-col items-center justify-center gap-2">
         {/* Timer */}
-        <Timer />
+        <Timer timer={room.timer} />
         {/* Hint Counter */}
-        <span className="text-[14px] text-shadow-[0_0_10px_#FFFFFF]">Hints: 0</span>
+        <span className="text-[14px] text-shadow-[0_0_10px_#FFFFFF]">
+          Hints: {room.hintCounter}
+        </span>
       </div>
 
       {/* Right section */}

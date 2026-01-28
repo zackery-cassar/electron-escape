@@ -13,7 +13,7 @@ export function ResetTimerButton({ timer }: ResetTimerButtonProps): React.JSX.El
   const disabled = !timer.connected || timer.state === State.RESETTING
 
   const handleClick = (): void => {
-    window.api.timer.reset(timer.id)
+    // TODO: Implement reset timer functionality
     setAnimating(true)
   }
 
