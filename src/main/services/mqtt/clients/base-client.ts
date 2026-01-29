@@ -14,8 +14,6 @@ export abstract class BaseClient {
     this.id = id
     this.config = config
     this.webContents = webContents
-
-    this.connect()
   }
 
   /**
@@ -47,7 +45,6 @@ export abstract class BaseClient {
 
       // Connection error
       this.client.on('error', (error) => {
-        console.error(`[${this.id}] Connection error:`, error)
         this.setConnected(false)
         reject(error) // Reject the promise on error
       })
@@ -107,7 +104,11 @@ export abstract class BaseClient {
   private setConnected(connected: boolean): void {
     if (this.lastConnected === connected) return
     this.lastConnected = connected
-    this.webContents.send('client:connected', { id: this.id, connected })
+
+    // Check if webContents is still valid before sending (prevents errors on app close)
+    if (!this.webContents.isDestroyed()) {
+      this.webContents.send('client:connected', { id: this.id, connected })
+    }
   }
 
   protected abstract callback(topic: string, message: string): void

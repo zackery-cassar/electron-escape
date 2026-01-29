@@ -11,6 +11,7 @@ export class MqttManager {
 
     this.clients.set(id, client)
     console.log(`[MqttManager] Added client with id ${id}.`)
+    client.connect() // Connect the client as well
   }
 
   /**

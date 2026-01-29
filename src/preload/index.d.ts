@@ -1,7 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import { TimerApi } from './api/timer'
-import { VenueApi } from './api/venue'
-import { EscapeRoomApi } from './api/escape-rooms'
+import './api'
 
 declare global {
   interface Window {
@@ -10,6 +8,7 @@ declare global {
       timer: TimerApi
       escapeRooms: EscapeRoomApi
       venue: VenueApi
+      puzzles: PuzzlesApi
     }
   }
 }

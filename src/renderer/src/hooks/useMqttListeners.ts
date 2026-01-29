@@ -7,4 +7,10 @@ export function useMqttListeners(): void {
       useVenueStore.getState().updateConnected(id, connected)
     })
   }, [])
+
+  useEffect(() => {
+    window.api.puzzles.onState((roomId, puzzleId, newState) => {
+      useVenueStore.getState().updateState(roomId, puzzleId, newState)
+    })
+  }, [])
 }

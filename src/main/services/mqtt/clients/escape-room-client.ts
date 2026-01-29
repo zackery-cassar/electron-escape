@@ -4,16 +4,26 @@ import { WebContents } from 'electron'
 import { BaseClient } from './base-client'
 
 export class EscapeRoomClient extends BaseClient {
-  private escapeRoom: EscapeRoom
+  private room: EscapeRoom
 
-  constructor(id: string, config: MqttConfig, webContents: WebContents, escapeRoom: EscapeRoom) {
+  constructor(id: string, config: MqttConfig, webContents: WebContents, room: EscapeRoom) {
     super(id, config, webContents)
-    this.escapeRoom = escapeRoom
+    this.room = room
+    this.subscribe(`${this.room.mqtt.topic}/#`)
   }
 
   protected callback(topic: string, message: string): void {
-    console.log(`[EscapeRoomClient ${this.id}] Message received on topic ${topic}: ${message}`)
-
-    // TODO: Loop through every puzzle and see if the topic matches
+    // Loop through every puzzle and see if the topic matches
+    this.room.puzzles.forEach((puzzle) => {
+      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/state`) {
+        const data = JSON.parse(message)
+        // Send the puzzle state update to the renderer process
+        this.webContents.send('puzzle:state', {
+          roomId: this.room.id,
+          puzzleId: puzzle.id,
+          state: data.state
+        })
+      }
+    })
   }
 }

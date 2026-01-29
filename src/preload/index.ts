@@ -3,12 +3,14 @@ import { contextBridge } from 'electron'
 import { escapeRoomApi } from './api/escape-rooms'
 import { timerApi } from './api/timer'
 import { venueApi } from './api/venue'
+import { puzzlesApi } from './api/puzles'
 
 // Custom APIs for renderer
 const api = {
   timer: timerApi,
   escapeRooms: escapeRoomApi,
-  venue: venueApi
+  venue: venueApi,
+  puzzles: puzzlesApi
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

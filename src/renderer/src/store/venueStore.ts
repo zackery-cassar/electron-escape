@@ -4,13 +4,15 @@ import { createUISlice, UISlice } from './slices/uiSlice'
 import { createVenueSlice, VenueSlice } from './slices/venueSlice'
 import { Venue } from '@shared/types/venue'
 import { EscapeRoom } from '@shared/types/escape-room'
+import { createPuzzleSlice, PuzzleSlice } from './slices/puzzleSlice'
 
-type StoreState = VenueSlice & EscapeRoomSlice & UISlice
+type StoreState = VenueSlice & EscapeRoomSlice & UISlice & PuzzleSlice
 
 export const useVenueStore = create<StoreState>()((...a) => ({
   ...createVenueSlice(...a),
   ...createEscapeRoomSlice(...a),
-  ...createUISlice(...a)
+  ...createUISlice(...a),
+  ...createPuzzleSlice(...a)
 }))
 
 export const useVenue = (): Venue | null => useVenueStore((state) => state.venue)
