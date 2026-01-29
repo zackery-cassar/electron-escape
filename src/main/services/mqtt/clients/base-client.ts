@@ -14,6 +14,8 @@ export abstract class BaseClient {
     this.id = id
     this.config = config
     this.webContents = webContents
+
+    this.connect()
   }
 
   /**
