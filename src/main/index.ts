@@ -5,6 +5,7 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 import { registerAllHandlers } from './handlers'
 import { initSupabase } from './services/supabase'
+import { mqttManager } from './services/mqtt'
 
 // Load environment variables from .env file
 config({ quiet: true })
@@ -82,6 +83,13 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+// Clean up MQTT connections before quitting
+app.on('before-quit', async (event) => {
+  event.preventDefault()
+  await mqttManager.cleanup() // Ensure all MQTT clients are disconnected before quitting
+  app.exit()
 })
 
 // In this file you can include the rest of your app's specific main process
