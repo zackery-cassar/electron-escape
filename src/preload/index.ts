@@ -3,7 +3,7 @@ import { contextBridge } from 'electron'
 import { escapeRoomApi } from './api/escape-rooms'
 import { timerApi } from './api/timer'
 import { venueApi } from './api/venue'
-import { puzzlesApi } from './api/puzles'
+import { puzzlesApi } from './api/puzzles'
 
 // Custom APIs for renderer
 const api = {
