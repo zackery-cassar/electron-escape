@@ -17,7 +17,7 @@ export function EscapeRoomPage(): React.JSX.Element {
 
       <div className="flex flex-1 flex-col overflow-y-auto">
         <div className="flex flex-1 flex-col gap-4 p-5">
-          {room.puzzles.map((puzzle) => (
+          {Object.values(room.puzzles).map((puzzle) => (
             <PuzzleCard key={puzzle.id} puzzle={puzzle} />
           ))}
         </div>

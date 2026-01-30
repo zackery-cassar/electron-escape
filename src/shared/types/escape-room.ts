@@ -9,7 +9,7 @@ export interface EscapeRoom {
   name: string // Name of the escape room
   mqtt: MqttConfig // MQTT configuration for the escape room
   timer: Timer // Timer associated with the escape room
-  puzzles: Puzzle[] // List of puzzles assocaited with the escape room
+  puzzles: Record<string, Puzzle> // Puzzles associated with the escape room
 
   // Runtime properties
   state: State // Current state of the escape room

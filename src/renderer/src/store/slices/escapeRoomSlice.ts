@@ -21,12 +21,12 @@ export const createEscapeRoomSlice: StateCreator<
 > = (set, get) => ({
   // Selectors
   getEscapeRoom: (roomId: string) => {
-    return get().venue?.escapeRooms.find((room) => room.id === roomId)
+    return get().venue?.rooms[roomId]
   },
 
   getPuzzle: (roomId: string, puzzleId: string) => {
     const room = get().getEscapeRoom(roomId)
-    return room?.puzzles.find((puzzle) => puzzle.id === puzzleId)
+    return room?.puzzles[puzzleId]
   },
 
   updateRoomConnected: (roomId: string, connected: boolean) => {
@@ -36,9 +36,13 @@ export const createEscapeRoomSlice: StateCreator<
       return {
         venue: {
           ...state.venue,
-          escapeRooms: state.venue.escapeRooms.map((room) =>
-            room.id === roomId ? { ...room, connected } : room
-          )
+          rooms: {
+            ...state.venue.rooms,
+            [roomId]: {
+              ...state.venue.rooms[roomId],
+              connected
+            }
+          }
         }
       }
     })

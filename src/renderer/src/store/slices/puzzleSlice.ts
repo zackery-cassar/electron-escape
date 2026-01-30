@@ -18,9 +18,7 @@ export const createPuzzleSlice: StateCreator<
   updatePuzzleConnected: (roomId: string, puzzleId: string, connected: boolean) => {
     set((state) => {
       if (!state.venue) return
-      const room = state.venue.escapeRooms.find((r) => r.id === roomId)
-      if (!room) return
-      const puzzle = room.puzzles.find((p) => p.id === puzzleId)
+      const puzzle = state.venue.rooms[roomId]?.puzzles[puzzleId]
       if (!puzzle) return
       puzzle.connected = connected
     })
@@ -28,9 +26,7 @@ export const createPuzzleSlice: StateCreator<
   updatePuzzleState: (roomId: string, puzzleId: string, newState: State) => {
     set((state) => {
       if (!state.venue) return
-      const room = state.venue.escapeRooms.find((r) => r.id === roomId)
-      if (!room) return
-      const puzzle = room.puzzles.find((p) => p.id === puzzleId)
+      const puzzle = state.venue.rooms[roomId]?.puzzles[puzzleId]
       if (!puzzle) return
       puzzle.state = newState
     })

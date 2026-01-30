@@ -16,7 +16,7 @@ export class EscapeRoomClient extends BaseClient {
     const data = JSON.parse(message)
 
     // Loop through every puzzle and see if the topic matches
-    this.room.puzzles.forEach((puzzle) => {
+    Object.values(this.room.puzzles).forEach((puzzle) => {
       // Puzzle connected
       if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/connected`) {
         this.webContents.send('puzzle:connected', {

@@ -19,8 +19,8 @@ export const useVenueStore = create<StoreState>()(
 )
 
 export const useVenue = (): Venue | null => useVenueStore((state) => state.venue)
-export const useEscapeRooms = (): EscapeRoom[] | null =>
-  useVenueStore((state) => state.venue?.escapeRooms || null)
+export const useEscapeRooms = (): Record<string, EscapeRoom> =>
+  useVenueStore((state) => state.venue?.rooms || {})
 export const useEscapeRoom = (id: string): EscapeRoom | null =>
   useVenueStore((state) => state.getEscapeRoom(id) || null)
 export const useLoading = (): boolean => useVenueStore((state) => state.loading)

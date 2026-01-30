@@ -9,8 +9,9 @@ type EscapeRoomItemProps = {
 }
 
 export function EscapeRoomItem({ room }: EscapeRoomItemProps): React.JSX.Element {
-  const finished = room.puzzles.filter((puzzle) => puzzle.state === State.FINISHED).length
-  const progress = room.puzzles.length > 0 ? (finished / room.puzzles.length) * 100 : 0
+  const puzzles = Object.values(room.puzzles)
+  const finished = puzzles.filter((puzzle) => puzzle.state === State.FINISHED).length
+  const progress = puzzles.length > 0 ? (finished / puzzles.length) * 100 : 0
 
   return (
     <SidebarItem name={room.name} to={`/escape-rooms/${room.id}`}>

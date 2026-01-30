@@ -1,6 +1,8 @@
 import { State } from '@shared/types/state'
 import { Venue } from '@shared/types/venue'
 import { getSupabase } from './supabase'
+import { EscapeRoom } from '@shared/types/escape-room'
+import { Puzzle } from '@shared/types/puzzle'
 
 /**
  * Fetch venue from the database.
@@ -25,51 +27,55 @@ export async function fetchVenue(venueId: string): Promise<Venue | null> {
   return {
     id: venue.id,
     name: venue.name,
-    escapeRooms: venue.escape_rooms.map((room) => ({
-      id: room.id,
-      venueId: room.venue_id,
-      name: room.name,
-      mqtt: {
-        brokerHost: room.mqtt_brokers?.host || '',
-        brokerPort: room.mqtt_brokers?.port || 1883,
-        topic: room.topic
-      },
-      timer: {
-        duration: room.duration,
-        state: State.UNKNOWN, // Runtime state, not stored in DB
-        connected: false, // Runtime state, not stored in DB
-        timeRemaining: '00:00:00' // Runtime state, not stored in DB
-      },
-      puzzles: (room.puzzles || [])
-        .sort((a, b) => a.order - b.order)
-        .map((puzzle) => ({
-          id: puzzle.id,
-          escapeRoomId: puzzle.escape_room_id,
-          name: puzzle.name,
-          subtopic: puzzle.subtopic,
-          isTech: puzzle.is_tech,
-          hints: (puzzle.hints || [])
+    rooms: venue.escape_rooms
+      .sort((a, b) => a.order - b.order)
+      .reduce<Record<string, EscapeRoom>>((acc, room) => {
+        acc[room.id] = {
+          id: room.id,
+          venueId: room.venue_id,
+          name: room.name,
+          mqtt: {
+            brokerHost: room.mqtt_brokers?.host || '',
+            brokerPort: room.mqtt_brokers?.port || 1883,
+            topic: room.topic
+          },
+          timer: {
+            duration: room.duration,
+            state: State.UNKNOWN,
+            connected: false,
+            timeRemaining: '00:00:00'
+          },
+          puzzles: (room.puzzles || [])
             .sort((a, b) => a.order - b.order)
-            .map((hint) => ({
-              id: hint.id,
-              puzzleId: hint.puzzle_id,
-              title: hint.title,
-              content: hint.content,
-              order: hint.order,
-
-              sent: false // Runtime state, not stored in DB
-            })),
-
-          state: State.UNKNOWN, // Runtime state, not stored in DB
-          connected: false // Runtime state, not stored in DB
-        })),
-
-      state: State.UNKNOWN, // Runtime state, not stored in DB
-      phase: '', // Runtime state, not stored in DB
-      connected: false, // Runtime state, not stored in DB
-
-      currentHint: '', // Runtime state, not stored in DB
-      hintCounter: 0 // Runtime state, not stored in DB
-    }))
+            .reduce<Record<string, Puzzle>>((puzzleAcc, puzzle) => {
+              puzzleAcc[puzzle.id] = {
+                id: puzzle.id,
+                escapeRoomId: puzzle.escape_room_id,
+                name: puzzle.name,
+                subtopic: puzzle.subtopic,
+                isTech: puzzle.is_tech,
+                hints: (puzzle.hints || [])
+                  .sort((a, b) => a.order - b.order)
+                  .map((hint) => ({
+                    id: hint.id,
+                    puzzleId: hint.puzzle_id,
+                    title: hint.title,
+                    content: hint.content,
+                    order: hint.order,
+                    sent: false
+                  })),
+                state: State.UNKNOWN,
+                connected: false
+              }
+              return puzzleAcc
+            }, {}),
+          state: State.UNKNOWN,
+          phase: '',
+          connected: false,
+          currentHint: '',
+          hintCounter: 0
+        }
+        return acc
+      }, {})
   }
 }

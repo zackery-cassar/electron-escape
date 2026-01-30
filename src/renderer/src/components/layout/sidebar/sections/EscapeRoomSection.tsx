@@ -7,7 +7,7 @@ export function EscapeRoomSection(): React.JSX.Element {
 
   return (
     <SidebarSection title="Escape Rooms" scrollable={true} className="flex-1">
-      {rooms?.map((room) => (
+      {Object.values(rooms).map((room) => (
         <EscapeRoomItem key={room.id} room={room} />
       ))}
     </SidebarSection>
