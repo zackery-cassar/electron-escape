@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './Router'
 import { useMqttListeners } from '@renderer/hooks/useMqttListeners'
+import { Tooltip } from 'radix-ui'
 
 export default function App(): React.JSX.Element {
   const fetchVenue = useFetchVenue()
@@ -16,5 +17,9 @@ export default function App(): React.JSX.Element {
 
   if (loading) return <LoadingPage />
 
-  return <RouterProvider router={router} />
+  return (
+    <Tooltip.Provider>
+      <RouterProvider router={router} />
+    </Tooltip.Provider>
+  )
 }

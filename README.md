@@ -54,6 +54,6 @@ npm install -D prettier prettier-plugin-tailwindcss
 
 
 TODO:
-- Add connected data for puzzles
-- Remove connection status for non tech based puzzles
-- Make connection data for puzzles show unknown if the server itself is offline
+- [ ] Make connection data for puzzles show unknown if the server itself is offline
+- [x] Add full hint display when hovering over a hint
+- [ ] Add quick hint send functionality
