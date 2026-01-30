@@ -1,6 +1,8 @@
 import { Venue } from '@shared/types/venue'
 import { StateCreator } from 'zustand'
 import { UISlice } from './uiSlice'
+import { PuzzleSlice } from './puzzleSlice'
+import { EscapeRoomSlice } from './escapeRoomSlice'
 
 export interface VenueSlice {
   // State
@@ -10,10 +12,12 @@ export interface VenueSlice {
   fetchVenue: (venueId: string) => Promise<void>
 }
 
-export const createVenueSlice: StateCreator<VenueSlice & UISlice, [], [], VenueSlice> = (
-  set,
-  get
-) => ({
+export const createVenueSlice: StateCreator<
+  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice,
+  [['zustand/immer', never]],
+  [],
+  VenueSlice
+> = (set, get) => ({
   // Initial state
   venue: null,
 

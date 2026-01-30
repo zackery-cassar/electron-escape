@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
 import { createEscapeRoomSlice, EscapeRoomSlice } from './slices/escapeRoomSlice'
 import { createUISlice, UISlice } from './slices/uiSlice'
 import { createVenueSlice, VenueSlice } from './slices/venueSlice'
@@ -8,12 +9,14 @@ import { createPuzzleSlice, PuzzleSlice } from './slices/puzzleSlice'
 
 type StoreState = VenueSlice & EscapeRoomSlice & UISlice & PuzzleSlice
 
-export const useVenueStore = create<StoreState>()((...a) => ({
-  ...createVenueSlice(...a),
-  ...createEscapeRoomSlice(...a),
-  ...createUISlice(...a),
-  ...createPuzzleSlice(...a)
-}))
+export const useVenueStore = create<StoreState>()(
+  immer((...a) => ({
+    ...createVenueSlice(...a),
+    ...createEscapeRoomSlice(...a),
+    ...createUISlice(...a),
+    ...createPuzzleSlice(...a)
+  }))
+)
 
 export const useVenue = (): Venue | null => useVenueStore((state) => state.venue)
 export const useEscapeRooms = (): EscapeRoom[] | null =>

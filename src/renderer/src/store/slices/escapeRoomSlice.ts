@@ -2,18 +2,20 @@ import { EscapeRoom } from '@shared/types/escape-room'
 import { Puzzle } from '@shared/types/puzzle'
 import { StateCreator } from 'zustand'
 import { VenueSlice } from './venueSlice'
+import { PuzzleSlice } from './puzzleSlice'
+import { UISlice } from './uiSlice'
 
 export interface EscapeRoomSlice {
   // Selectors
   getEscapeRoom: (roomId: string) => EscapeRoom | undefined
   getPuzzle: (roomId: string, puzzleId: string) => Puzzle | undefined
 
-  updateConnected: (roomId: string, connected: boolean) => void
+  updateRoomConnected: (roomId: string, connected: boolean) => void
 }
 
 export const createEscapeRoomSlice: StateCreator<
-  EscapeRoomSlice & VenueSlice,
-  [],
+  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice,
+  [['zustand/immer', never]],
   [],
   EscapeRoomSlice
 > = (set, get) => ({
@@ -27,7 +29,7 @@ export const createEscapeRoomSlice: StateCreator<
     return room?.puzzles.find((puzzle) => puzzle.id === puzzleId)
   },
 
-  updateConnected: (roomId: string, connected: boolean) => {
+  updateRoomConnected: (roomId: string, connected: boolean) => {
     set((state) => {
       if (!state.venue) return state
 

@@ -53,16 +53,7 @@ npm install -D prettier prettier-plugin-tailwindcss
 
 
 
-Escape Room
-  UID
-  Name
-
-  List of Puzzles
-  Timer System
-  Hint System
-  Client
-
-Puzzle
-  UID
-  Name
-  The escape room it belongs to
+TODO:
+- Add connected data for puzzles
+- Remove connection status for non tech based puzzles
+- Make connection data for puzzles show unknown if the server itself is offline

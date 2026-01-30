@@ -13,16 +13,28 @@ export class EscapeRoomClient extends BaseClient {
   }
 
   protected callback(topic: string, message: string): void {
+    const data = JSON.parse(message)
+
     // Loop through every puzzle and see if the topic matches
     this.room.puzzles.forEach((puzzle) => {
+      // Puzzle connected
+      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/connected`) {
+        this.webContents.send('puzzle:connected', {
+          roomId: this.room.id,
+          puzzleId: puzzle.id,
+          connected: data.connected
+        })
+        return
+      }
+      // Puzzle state
       if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/state`) {
-        const data = JSON.parse(message)
         // Send the puzzle state update to the renderer process
         this.webContents.send('puzzle:state', {
           roomId: this.room.id,
           puzzleId: puzzle.id,
           state: data.state
         })
+        return
       }
     })
   }

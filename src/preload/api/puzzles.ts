@@ -1,17 +1,22 @@
 import { State } from '@shared/types/state'
-import { ipcRenderer } from 'electron'
+import { createEventListener } from '../utils/ipc-helpers'
+
+type PuzzleConnectedData = { roomId: string; puzzleId: string; connected: boolean }
+type PuzzleStateData = { roomId: string; puzzleId: string; state: State }
 
 export const puzzlesApi = {
+  onConnected: (callback: (roomId: string, puzzleId: string, connected: boolean) => void) => {
+    return createEventListener<PuzzleConnectedData>(
+      'puzzle:connected',
+      ({ roomId, puzzleId, connected }) => {
+        callback(roomId, puzzleId, connected)
+      }
+    )
+  },
   onState: (callback: (roomId: string, puzzleId: string, state: State) => void) => {
-    const listener = (
-      _event: Electron.IpcRendererEvent,
-      data: { roomId: string; puzzleId: string; state: State }
-    ): void => {
-      callback(data.roomId, data.puzzleId, data.state)
-    }
-
-    ipcRenderer.on('puzzle:state', listener)
-    return () => ipcRenderer.removeListener('puzzle:state', listener)
+    return createEventListener<PuzzleStateData>('puzzle:state', ({ roomId, puzzleId, state }) => {
+      callback(roomId, puzzleId, state)
+    })
   }
 }
 
