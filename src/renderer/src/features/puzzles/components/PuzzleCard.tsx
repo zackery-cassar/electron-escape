@@ -21,7 +21,7 @@ export function PuzzleCard({ puzzle }: PuzzleCardProps): React.JSX.Element {
             <ColorDot color={'#FFFFFF'} size={5} />
             <StateBadge state={puzzle.state} />
           </div>
-          <ConnectionStatus connected={puzzle.connected} size="small" />
+          {puzzle.isTech && <ConnectionStatus connected={puzzle.connected} size="small" />}
         </div>
         <div className="flex items-start justify-end gap-2">
           <ActivateFinishPuzzleButton puzzle={puzzle} />
@@ -29,14 +29,16 @@ export function PuzzleCard({ puzzle }: PuzzleCardProps): React.JSX.Element {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <span className="text-[12px]">Hints</span>
-        <div className="flex gap-2">
-          {puzzle.hints.map((hint) => (
-            <HintButton key={hint.id} hint={hint} />
-          ))}
+      {puzzle.hints.length > 0 && (
+        <div className="flex flex-col gap-1">
+          <span className="text-[12px]">Hints</span>
+          <div className="flex gap-2">
+            {puzzle.hints.map((hint) => (
+              <HintButton key={hint.id} hint={hint} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
