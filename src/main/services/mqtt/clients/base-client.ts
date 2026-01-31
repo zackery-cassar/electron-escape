@@ -98,7 +98,7 @@ export abstract class BaseClient {
     if (!this.client || !this.client.connected) return // Cannot publish if not connected
 
     // Publish the message
-    this.client.publish(topic, JSON.stringify(message), { retain })
+    this.client.publish(`${this.config.topic}/${topic}`, JSON.stringify(message), { retain })
   }
 
   private setConnected(connected: boolean): void {
