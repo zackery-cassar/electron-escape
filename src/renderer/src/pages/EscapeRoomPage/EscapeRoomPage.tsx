@@ -23,7 +23,7 @@ export function EscapeRoomPage(): React.JSX.Element {
         </div>
 
         <div className="sticky bottom-0 p-4 pt-0">
-          <HintBar />
+          <HintBar roomId={room.id} />
         </div>
       </div>
     </div>
