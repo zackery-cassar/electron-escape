@@ -9,6 +9,7 @@ declare global {
       escapeRooms: EscapeRoomApi
       venue: VenueApi
       puzzles: PuzzlesApi
+      hints: HintsApi
     }
   }
 }

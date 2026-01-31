@@ -8,7 +8,7 @@ import { UISlice } from './uiSlice'
 export interface EscapeRoomSlice {
   // Selectors
   getEscapeRoom: (roomId: string) => EscapeRoom | undefined
-  getPuzzle: (roomId: string, puzzleId: string) => Puzzle | undefined
+  getPuzzle: (puzzleId: string) => Puzzle | undefined
 
   updateRoomConnected: (roomId: string, connected: boolean) => void
 }
@@ -24,9 +24,15 @@ export const createEscapeRoomSlice: StateCreator<
     return get().venue?.rooms[roomId]
   },
 
-  getPuzzle: (roomId: string, puzzleId: string) => {
-    const room = get().getEscapeRoom(roomId)
-    return room?.puzzles[puzzleId]
+  getPuzzle: (puzzleId: string) => {
+    const rooms = get().venue?.rooms
+    if (!rooms) return undefined
+
+    for (const room of Object.values(rooms)) {
+      const puzzle = room.puzzles[puzzleId]
+      if (puzzle) return puzzle
+    }
+    return undefined
   },
 
   updateRoomConnected: (roomId: string, connected: boolean) => {

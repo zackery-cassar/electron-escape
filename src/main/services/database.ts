@@ -50,7 +50,7 @@ export async function fetchVenue(venueId: string): Promise<Venue | null> {
             .reduce<Record<string, Puzzle>>((puzzleAcc, puzzle) => {
               puzzleAcc[puzzle.id] = {
                 id: puzzle.id,
-                escapeRoomId: puzzle.escape_room_id,
+                roomId: puzzle.escape_room_id,
                 name: puzzle.name,
                 subtopic: puzzle.subtopic,
                 isTech: puzzle.is_tech,

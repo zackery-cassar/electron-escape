@@ -34,7 +34,7 @@ export function PuzzleCard({ puzzle }: PuzzleCardProps): React.JSX.Element {
           <span className="text-[12px]">Hints</span>
           <div className="flex gap-2">
             {puzzle.hints.map((hint) => (
-              <HintButton key={hint.id} hint={hint} />
+              <HintButton key={hint.id} roomId={puzzle.roomId} hint={hint} />
             ))}
           </div>
         </div>

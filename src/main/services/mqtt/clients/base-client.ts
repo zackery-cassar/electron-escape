@@ -94,11 +94,11 @@ export abstract class BaseClient {
   /**
    * Publish a message to an MQTT topic
    */
-  publish(topic: string, message: string, retain: boolean = false): void {
+  publish(topic: string, message: Record<string, unknown>, retain: boolean = false): void {
     if (!this.client || !this.client.connected) return // Cannot publish if not connected
 
     // Publish the message
-    this.client.publish(topic, message, { retain })
+    this.client.publish(topic, JSON.stringify(message), { retain })
   }
 
   private setConnected(connected: boolean): void {

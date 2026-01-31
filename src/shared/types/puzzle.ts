@@ -3,7 +3,7 @@ import { State } from './state'
 
 export interface Puzzle {
   id: string // Unique identifier for the puzzle
-  escapeRoomId: string // Which escape room this puzzle belongs to
+  roomId: string // Which escape room this puzzle belongs to
   name: string // Name of the puzzle
   subtopic: string // MQTT subtopic for the puzzle
   isTech: boolean // Whether the puzzle is a tech puzzle or not
