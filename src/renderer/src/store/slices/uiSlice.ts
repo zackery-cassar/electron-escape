@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand'
 import { EscapeRoomSlice } from './escapeRoomSlice'
 import { VenueSlice } from './venueSlice'
 import { PuzzleSlice } from './puzzleSlice'
+import { TimerSlice } from './timerSlice'
 
 export interface UISlice {
   // State
@@ -15,7 +16,7 @@ export interface UISlice {
 }
 
 export const createUISlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice,
+  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
   [['zustand/immer', never]],
   [],
   UISlice

@@ -12,7 +12,8 @@ export function StartPauseTimerButton({ timer }: StartPauseTimerButtonProps): Re
   const disabled = !timer.connected
 
   const handleClick = (): void => {
-    // TODO: Implement start/pause timer functionality
+    if (timer.state !== State.ACTIVE) window.api.timer.start(timer.roomId)
+    else window.api.timer.pause(timer.roomId)
   }
 
   return (

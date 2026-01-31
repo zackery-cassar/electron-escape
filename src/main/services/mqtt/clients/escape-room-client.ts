@@ -37,5 +37,28 @@ export class EscapeRoomClient extends BaseClient {
         return
       }
     })
+
+    // Timer stuff
+    if (topic === `${this.config.topic}/timer/state`) {
+      this.webContents.send('timer:state', {
+        roomId: this.room.id,
+        state: data.state
+      })
+      return
+    }
+    if (topic === `${this.config.topic}/timer/connected`) {
+      this.webContents.send('timer:connected', {
+        roomId: this.room.id,
+        connected: data.connected
+      })
+      return
+    }
+    if (topic === `${this.config.topic}/timer/data`) {
+      this.webContents.send('timer:data', {
+        roomId: this.room.id,
+        data: data.value
+      })
+      return
+    }
   }
 }

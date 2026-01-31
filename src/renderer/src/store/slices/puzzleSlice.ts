@@ -3,6 +3,7 @@ import { StateCreator } from 'zustand'
 import { EscapeRoomSlice } from './escapeRoomSlice'
 import { UISlice } from './uiSlice'
 import { VenueSlice } from './venueSlice'
+import { TimerSlice } from './timerSlice'
 
 export interface PuzzleSlice {
   updatePuzzleConnected: (roomId: string, puzzleId: string, connected: boolean) => void
@@ -10,7 +11,7 @@ export interface PuzzleSlice {
 }
 
 export const createPuzzleSlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice,
+  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
   [['zustand/immer', never]],
   [],
   PuzzleSlice

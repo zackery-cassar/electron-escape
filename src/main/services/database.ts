@@ -41,6 +41,7 @@ export async function fetchVenue(venueId: string): Promise<Venue | null> {
           },
           timer: {
             duration: room.duration,
+            roomId: room.id,
             state: State.UNKNOWN,
             connected: false,
             timeRemaining: '00:00:00'

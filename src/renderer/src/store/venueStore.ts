@@ -7,15 +7,17 @@ import { Venue } from '@shared/types/venue'
 import { EscapeRoom } from '@shared/types/escape-room'
 import { createPuzzleSlice, PuzzleSlice } from './slices/puzzleSlice'
 import { Puzzle } from '@shared/types/puzzle'
+import { createTimerSlice, TimerSlice } from './slices/timerSlice'
 
-type StoreState = VenueSlice & EscapeRoomSlice & UISlice & PuzzleSlice
+type StoreState = VenueSlice & EscapeRoomSlice & UISlice & PuzzleSlice & TimerSlice
 
 export const useVenueStore = create<StoreState>()(
   immer((...a) => ({
     ...createVenueSlice(...a),
     ...createEscapeRoomSlice(...a),
     ...createUISlice(...a),
-    ...createPuzzleSlice(...a)
+    ...createPuzzleSlice(...a),
+    ...createTimerSlice(...a)
   }))
 )
 
