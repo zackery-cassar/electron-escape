@@ -54,6 +54,23 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
 
       // Move the cursor to the edited position
       setTimeout(() => input.setSelectionRange(position, position), 0)
+    } else if (e.key === 'Delete') {
+      e.preventDefault() // Prevent the default delete behavior
+
+      // Find the position of the next digit (ignoring non-digit characters)
+      const position = nextDigitPosition(currentValue, cursorPosition)
+      if (position > currentValue.length) return
+
+      // Update the value
+      const newValue = replaceValueAtPosition(currentValue, position, '0')
+      setText(newValue)
+
+      // Move the cursor to the next editable position
+      setTimeout(() => {
+        let newPosition = position + 1
+        while (newPosition < newValue.length && isColon(newValue, newPosition)) newPosition++
+        input.setSelectionRange(newPosition, newPosition)
+      }, 0)
     } else if (/^\d$/.test(e.key)) {
       e.preventDefault() // Prevent the default character input behavior
 
