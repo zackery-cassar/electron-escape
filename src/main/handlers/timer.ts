@@ -35,4 +35,14 @@ export function registerTimerHandlers(): void {
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
     }
   })
+
+  ipcMain.handle('timer:set', async (_event, roomId: string, timeRemaining: string) => {
+    try {
+      mqttManager.getClient(roomId)?.publish(`timer/data`, { value: timeRemaining }, true)
+      return { success: true }
+    } catch (error) {
+      console.error('Error setting the timer:', error)
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
+    }
+  })
 }

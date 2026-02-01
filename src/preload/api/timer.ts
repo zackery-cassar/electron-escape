@@ -10,6 +10,8 @@ export const timerApi = {
   reset: (timerId: string): Promise<void> => ipcRenderer.invoke('timer:reset', timerId),
   start: (timerId: string): Promise<void> => ipcRenderer.invoke('timer:start', timerId),
   pause: (timerId: string): Promise<void> => ipcRenderer.invoke('timer:pause', timerId),
+  set: (timerId: string, timeRemaining: string): Promise<void> =>
+    ipcRenderer.invoke('timer:set', timerId, timeRemaining),
   onConnected: (callback: (roomId: string, connected: boolean) => void) => {
     return createEventListener<TimerConnectedData>('timer:connected', ({ roomId, connected }) => {
       callback(roomId, connected)
