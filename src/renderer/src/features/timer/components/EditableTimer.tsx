@@ -8,6 +8,7 @@ import {
 } from '../utils/timerInput'
 import { formatSeconds } from '../utils/formatSeconds'
 import { parseTime } from '../utils/parseTime'
+import { cn } from '@renderer/utils/cn'
 
 type EditableTimerProps = {
   timer: Timer
@@ -84,7 +85,10 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
       onBlur={handleCommit}
       onKeyDown={handleKeyDown}
       onClick={handleClick}
-      className="box-content w-45 rounded border-0 bg-transparent py-1.5 text-center leading-none tracking-wide tabular-nums transition-colors focus:ring-0 focus:outline-none"
+      className={cn(
+        'box-content w-45 rounded border-0 bg-transparent py-1.5 text-center leading-none tracking-wide tabular-nums transition-colors focus:ring-0 focus:outline-none',
+        disabled && 'opacity-45'
+      )}
       autoFocus
     />
   )
