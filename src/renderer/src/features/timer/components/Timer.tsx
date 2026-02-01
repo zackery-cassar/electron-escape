@@ -1,9 +1,10 @@
-import React from 'react'
-import { StartPauseTimerButton } from './StartPauseTimerButton'
 import { Separator } from '@renderer/components/ui/separator'
-import { ResetTimerButton } from './ResetTimerButton'
 import { Timer as TimerType } from '@shared/types/timer'
+import React from 'react'
 import { EditableTimer } from './EditableTimer'
+import { ResetTimerButton } from './ResetTimerButton'
+import { StartPauseTimerButton } from './StartPauseTimerButton'
+import { TimerContextMenu } from './TimerContextMenu'
 
 type TimerProps = {
   timer: TimerType
@@ -16,9 +17,11 @@ export function Timer({ timer }: TimerProps): React.JSX.Element {
 
       <Separator className="h-full w-0.5" />
 
-      <div className="inline-block px-2 text-4xl font-bold">
-        <EditableTimer timer={timer} />
-      </div>
+      <TimerContextMenu timer={timer}>
+        <div className="inline-block px-2 text-4xl font-bold">
+          <EditableTimer timer={timer} />
+        </div>
+      </TimerContextMenu>
 
       <Separator className="h-full w-0.5" />
 

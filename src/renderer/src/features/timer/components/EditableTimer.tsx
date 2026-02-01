@@ -20,12 +20,13 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
   const [text, setText] = useState(timer.timeRemaining)
 
   const handleCommit = (): void => {
+    if (!isEditing) return
     window.api.timer.set(timer.roomId, formatSeconds(parseTime(text)))
     setIsEditing(false)
   }
 
-  const handleClick = (): void => {
-    if (disabled) return
+  const handleClick = (e: React.MouseEvent): void => {
+    if (disabled || e.button !== 0) return
     setText(timer.timeRemaining)
     setIsEditing(true)
   }
@@ -83,7 +84,7 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
       onBlur={handleCommit}
       onKeyDown={handleKeyDown}
       onClick={handleClick}
-      className="box-content w-45 rounded border-0 bg-transparent py-1.5 text-center leading-none tracking-wide tabular-nums transition-colors focus:bg-white/10 focus:ring-0 focus:outline-none"
+      className="box-content w-45 rounded border-0 bg-transparent py-1.5 text-center leading-none tracking-wide tabular-nums transition-colors focus:ring-0 focus:outline-none"
       autoFocus
     />
   )
