@@ -10,7 +10,7 @@ type ActivateFinishPuzzleButtonProps = {
 export function ActivateFinishPuzzleButton({
   puzzle
 }: ActivateFinishPuzzleButtonProps): React.JSX.Element {
-  const disabled = !puzzle.connected
+  const disabled = puzzle.isTech && !puzzle.connected
 
   const handleClick = (): void => {
     // TODO: Implement activate/finish puzzle functionality

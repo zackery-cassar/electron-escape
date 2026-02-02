@@ -7,7 +7,7 @@ type ResetPuzzleButtonProps = {
 }
 
 export function ResetPuzzleButton({ puzzle }: ResetPuzzleButtonProps): React.JSX.Element {
-  const disabled = !puzzle.connected
+  const disabled = puzzle.isTech && !puzzle.connected
 
   const handleClick = (): void => {
     // TODO: Implement reset puzzle functionality
