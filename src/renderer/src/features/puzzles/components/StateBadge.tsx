@@ -1,4 +1,5 @@
 import { cn } from '@renderer/utils/cn'
+import { Puzzle } from '@shared/types/puzzle'
 import { State } from '@shared/types/state'
 import React from 'react'
 
@@ -20,9 +21,14 @@ const STATE_COLORS: Record<State, string> = {
   [State.RESETTING]: 'bg-gray-200 text-gray-700'
 }
 
-export function StateBadge({ state }: { state: State }): React.JSX.Element {
-  const label = STATE_LABELS[state] || 'UNKNOWN'
-  const color = STATE_COLORS[state] || STATE_COLORS[State.UNKNOWN]
+type StateBadgeProps = {
+  puzzle: Puzzle
+}
+
+export function StateBadge({ puzzle }: StateBadgeProps): React.JSX.Element {
+  const isUnknown = puzzle.isTech && !puzzle.connected
+  const label = isUnknown ? STATE_LABELS[State.UNKNOWN] : STATE_LABELS[puzzle.state]
+  const color = isUnknown ? STATE_COLORS[State.UNKNOWN] : STATE_COLORS[puzzle.state]
 
   return (
     <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-semibold', color)}>

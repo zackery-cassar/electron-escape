@@ -19,7 +19,7 @@ export function PuzzleCard({ puzzle }: PuzzleCardProps): React.JSX.Element {
           <div className="flex items-center gap-3">
             <h3 className="text-[15px]">{puzzle.name}</h3>
             <ColorDot color={'#FFFFFF'} size={5} />
-            <StateBadge state={puzzle.state} />
+            <StateBadge puzzle={puzzle} />
           </div>
           {puzzle.isTech && <ConnectionStatus connected={puzzle.connected} size="small" />}
         </div>
