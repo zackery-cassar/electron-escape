@@ -1,5 +1,6 @@
 import { cn } from '@renderer/utils/cn'
 import { Puzzle } from '@shared/types/puzzle'
+import { State } from '@shared/types/state'
 import React from 'react'
 
 type ResetPuzzleButtonProps = {
@@ -10,7 +11,8 @@ export function ResetPuzzleButton({ puzzle }: ResetPuzzleButtonProps): React.JSX
   const disabled = puzzle.isTech && !puzzle.connected
 
   const handleClick = (): void => {
-    // TODO: Implement reset puzzle functionality
+    if (puzzle.isTech) window.api.puzzles.setState(puzzle, State.RESETTING)
+    else window.api.puzzles.setState(puzzle, State.READY)
   }
 
   return (

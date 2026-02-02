@@ -1,5 +1,6 @@
 import { registerEscapeRoomHandlers } from './escape-rooms'
 import { registerHintsHandler } from './hints'
+import { registerPuzzlesHandler } from './puzzles'
 import { registerTimerHandlers } from './timer'
 import { registerVenueHandlers } from './venue'
 
@@ -11,6 +12,7 @@ export function registerAllHandlers(): void {
   registerEscapeRoomHandlers()
   registerTimerHandlers()
   registerHintsHandler()
+  registerPuzzlesHandler()
   // Add more handler registrations here as you create them
   // Example:
   // registerPuzzleHandlers()

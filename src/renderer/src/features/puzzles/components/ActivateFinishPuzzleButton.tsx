@@ -13,7 +13,8 @@ export function ActivateFinishPuzzleButton({
   const disabled = puzzle.isTech && !puzzle.connected
 
   const handleClick = (): void => {
-    // TODO: Implement activate/finish puzzle functionality
+    if (puzzle.state !== State.ACTIVE) window.api.puzzles.setState(puzzle, State.ACTIVE)
+    else window.api.puzzles.setState(puzzle, State.FINISHED)
   }
 
   return (
