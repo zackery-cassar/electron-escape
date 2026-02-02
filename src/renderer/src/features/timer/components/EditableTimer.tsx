@@ -26,10 +26,14 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
     setIsEditing(false)
   }
 
+  const handleCancel = (): void => {
+    setIsEditing(false)
+  }
+
   const handleClick = (e: React.MouseEvent): void => {
-    if (disabled || e.button !== 0) return
-    setText(timer.timeRemaining)
+    if (disabled || e.button !== 0 || isEditing) return
     setIsEditing(true)
+    setText(timer.timeRemaining)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent): void => {
@@ -39,8 +43,8 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
     const cursorPosition = input.selectionStart ?? 0
     const currentValue = text
 
-    if (e.key === 'Enter') input.blur()
-    else if (e.key === 'Escape') setIsEditing(false)
+    if (e.key === 'Enter') handleCommit()
+    else if (e.key === 'Escape') handleCancel()
     else if (e.key === 'Backspace') {
       e.preventDefault() // Prevent the default backspace behavior
 
@@ -99,7 +103,7 @@ export function EditableTimer({ timer }: EditableTimerProps): React.JSX.Element 
       inputMode="numeric"
       disabled={disabled}
       readOnly={!isEditing}
-      onBlur={handleCommit}
+      onBlur={handleCancel}
       onKeyDown={handleKeyDown}
       onClick={handleClick}
       className={cn(
