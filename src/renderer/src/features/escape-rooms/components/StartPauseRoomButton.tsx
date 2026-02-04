@@ -9,7 +9,8 @@ type StartPauseRoomButtonProps = {
 }
 
 export function StartPauseRoomButton({ room }: StartPauseRoomButtonProps): React.JSX.Element {
-  const disabled = !room.connected
+  const disabled = true // Temporarily disable the button until functionality is implemented
+  // const disabled = !room.connected
   const isActive = room.state === State.ACTIVE
 
   const handleClick = (): void => {

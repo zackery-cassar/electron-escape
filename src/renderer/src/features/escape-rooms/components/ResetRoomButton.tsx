@@ -1,6 +1,5 @@
 import { cn } from '@renderer/utils/cn'
 import { EscapeRoom } from '@shared/types/escape-room'
-import { State } from '@shared/types/state'
 import { RotateCcw } from 'lucide-react'
 import React, { useState } from 'react'
 
@@ -10,7 +9,8 @@ type ResetRoomButtonProps = {
 
 export function ResetRoomButton({ room }: ResetRoomButtonProps): React.JSX.Element {
   const [animating, setAnimating] = useState(false)
-  const disabled = !room.connected || room.state === State.RESETTING
+  const disabled = true // Temporarily disable the button until functionality is implemented
+  // const disabled = !room.connected || room.state === State.RESETTING
 
   const handleClick = (): void => {
     // TODO: Implement reset room functionality

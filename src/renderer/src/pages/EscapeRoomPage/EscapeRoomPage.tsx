@@ -5,6 +5,7 @@ import { PuzzleCard } from '@renderer/features/puzzles/components/PuzzleCard'
 import { HintBar } from '@renderer/features/hints/components/HintBar'
 import { useEscapeRoom } from '@renderer/store/venueStore'
 import { HintPopup } from '@renderer/features/hints/components/HintPopup'
+import { Scrollbar } from '@renderer/components/ui/scrollbar'
 
 export function EscapeRoomPage(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
@@ -16,7 +17,7 @@ export function EscapeRoomPage(): React.JSX.Element {
     <div className="flex h-full flex-col">
       <EscapeRoomHeader room={room} />
 
-      <div className="flex flex-1 flex-col overflow-y-auto">
+      <Scrollbar className="flex flex-1 flex-col overflow-y-auto">
         <div className="flex flex-1 flex-col gap-4 p-5">
           {Object.values(room.puzzles).map((puzzle) => (
             <PuzzleCard key={puzzle.id} puzzle={puzzle} />
@@ -27,7 +28,7 @@ export function EscapeRoomPage(): React.JSX.Element {
           <HintPopup roomId={room.id} content={room.currentHint} />
           <HintBar roomId={room.id} />
         </div>
-      </div>
+      </Scrollbar>
     </div>
   )
 }
