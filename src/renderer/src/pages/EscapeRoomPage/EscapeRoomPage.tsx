@@ -18,15 +18,17 @@ export function EscapeRoomPage(): React.JSX.Element {
       <EscapeRoomHeader room={room} />
 
       <Scrollbar className="flex flex-1 flex-col overflow-y-auto">
-        <div className="flex flex-1 flex-col gap-4 p-5">
-          {Object.values(room.puzzles).map((puzzle) => (
-            <PuzzleCard key={puzzle.id} puzzle={puzzle} />
-          ))}
-        </div>
+        <div className="flex min-h-full flex-col">
+          <div className="flex flex-1 flex-col gap-4 p-5">
+            {Object.values(room.puzzles).map((puzzle) => (
+              <PuzzleCard key={puzzle.id} puzzle={puzzle} />
+            ))}
+          </div>
 
-        <div className="sticky bottom-0 flex flex-col items-center justify-center p-4 pt-0">
-          <HintPopup roomId={room.id} content={room.currentHint} />
-          <HintBar roomId={room.id} />
+          <div className="absolute bottom-0 w-full p-4 pt-0">
+            <HintPopup roomId={room.id} content={room.currentHint} />
+            <HintBar roomId={room.id} />
+          </div>
         </div>
       </Scrollbar>
     </div>

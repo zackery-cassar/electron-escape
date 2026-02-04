@@ -17,7 +17,7 @@ export function HintBar({ roomId }: HintBarProps): React.JSX.Element {
   }
 
   return (
-    <div className="flex w-full items-center gap-2 rounded-full bg-white/5 p-1 backdrop-blur-2xl">
+    <div className="flex items-center gap-2 rounded-full bg-white/5 p-1 backdrop-blur-2xl">
       <Lightbulb className="ml-2 size-5" />
 
       <input
