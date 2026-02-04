@@ -6,6 +6,7 @@ import icon from '../../resources/icon.png?asset'
 import { registerAllHandlers } from './handlers'
 import { initSupabase } from './services/supabase'
 import { mqttManager } from './services/mqtt'
+import { autoUpdater } from 'electron-updater'
 
 // Load environment variables from .env file
 config({ quiet: true })
@@ -68,6 +69,7 @@ app.whenReady().then(() => {
   registerAllHandlers()
 
   createWindow()
+  autoUpdater.checkForUpdatesAndNotify()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -94,3 +96,4 @@ app.on('before-quit', async (event) => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+autoUpdater.on('update-available', () => {})
