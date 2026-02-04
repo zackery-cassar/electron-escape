@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { EscapeRoomHeader } from './EscapeRoomHeader'
 import { PuzzleCard } from '@renderer/features/puzzles/components/PuzzleCard'
@@ -10,6 +10,21 @@ import { Scrollbar } from '@renderer/components/ui/scrollbar'
 export function EscapeRoomPage(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
   const room = useEscapeRoom(id || '')
+  const hintBarRef = useRef<HTMLDivElement>(null)
+  const [hintBarHeight, setHintBarHeight] = useState(0)
+
+  useLayoutEffect(() => {
+    if (!hintBarRef.current) return
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setHintBarHeight(entry.contentRect.height)
+      }
+    })
+
+    observer.observe(hintBarRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   if (!room) return <span>Failed to fetch room: {id}</span>
 
@@ -17,15 +32,16 @@ export function EscapeRoomPage(): React.JSX.Element {
     <div className="flex h-full flex-col">
       <EscapeRoomHeader room={room} />
 
-      <Scrollbar className="flex flex-1 flex-col overflow-y-auto">
-        <div className="flex min-h-full flex-col">
-          <div className="flex flex-1 flex-col gap-4 p-5">
+      <Scrollbar className="flex flex-col overflow-y-auto">
+        <div className="min-h-full">
+          {/* Adding 30 to the bottom padding for extra space */}
+          <div className="flex flex-col gap-4 p-5" style={{ paddingBottom: hintBarHeight + 30 }}>
             {Object.values(room.puzzles).map((puzzle) => (
               <PuzzleCard key={puzzle.id} puzzle={puzzle} />
             ))}
           </div>
 
-          <div className="absolute bottom-0 w-full p-4 pt-0">
+          <div ref={hintBarRef} className="absolute bottom-0 w-full p-4 pt-0">
             <HintPopup roomId={room.id} content={room.currentHint} />
             <HintBar roomId={room.id} />
           </div>
