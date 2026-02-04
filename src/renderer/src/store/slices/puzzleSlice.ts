@@ -1,9 +1,6 @@
 import { State } from '@shared/types/state'
 import { StateCreator } from 'zustand'
-import { EscapeRoomSlice } from './escapeRoomSlice'
-import { UISlice } from './uiSlice'
-import { VenueSlice } from './venueSlice'
-import { TimerSlice } from './timerSlice'
+import { StoreState } from '../venueStore'
 
 export interface PuzzleSlice {
   updatePuzzleConnected: (roomId: string, puzzleId: string, connected: boolean) => void
@@ -11,7 +8,7 @@ export interface PuzzleSlice {
 }
 
 export const createPuzzleSlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
+  StoreState,
   [['zustand/immer', never]],
   [],
   PuzzleSlice

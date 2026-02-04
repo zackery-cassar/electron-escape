@@ -37,4 +37,17 @@ export function useMqttListeners(): void {
       useVenueStore.getState().updateTimerData(roomId, data)
     })
   }, [])
+
+  // Hints
+  useEffect(() => {
+    window.api.hints.onData((roomId, data) => {
+      useVenueStore.getState().updateCurrentHint(roomId, data)
+    })
+  }, [])
+
+  useEffect(() => {
+    window.api.hints.onCounter((roomId, counter) => {
+      useVenueStore.getState().updateHintCounter(roomId, counter)
+    })
+  }, [])
 }

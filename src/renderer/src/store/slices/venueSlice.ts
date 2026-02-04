@@ -1,9 +1,6 @@
 import { Venue } from '@shared/types/venue'
 import { StateCreator } from 'zustand'
-import { UISlice } from './uiSlice'
-import { PuzzleSlice } from './puzzleSlice'
-import { EscapeRoomSlice } from './escapeRoomSlice'
-import { TimerSlice } from './timerSlice'
+import { StoreState } from '../venueStore'
 
 export interface VenueSlice {
   // State
@@ -14,7 +11,7 @@ export interface VenueSlice {
 }
 
 export const createVenueSlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
+  StoreState,
   [['zustand/immer', never]],
   [],
   VenueSlice

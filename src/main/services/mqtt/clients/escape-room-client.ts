@@ -15,29 +15,6 @@ export class EscapeRoomClient extends BaseClient {
   protected callback(topic: string, message: string): void {
     const data = JSON.parse(message)
 
-    // Loop through every puzzle and see if the topic matches
-    Object.values(this.room.puzzles).forEach((puzzle) => {
-      // Puzzle connected
-      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/connected`) {
-        this.webContents.send('puzzle:connected', {
-          roomId: this.room.id,
-          puzzleId: puzzle.id,
-          connected: data.connected
-        })
-        return
-      }
-      // Puzzle state
-      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/state`) {
-        // Send the puzzle state update to the renderer process
-        this.webContents.send('puzzle:state', {
-          roomId: this.room.id,
-          puzzleId: puzzle.id,
-          state: data.state
-        })
-        return
-      }
-    })
-
     // Timer stuff
     if (topic === `${this.config.topic}/timer/state`) {
       this.webContents.send('timer:state', {
@@ -60,5 +37,44 @@ export class EscapeRoomClient extends BaseClient {
       })
       return
     }
+
+    // Hint stuff
+    if (topic === `${this.config.topic}/hint/data`) {
+      this.webContents.send('hint:data', {
+        roomId: this.room.id,
+        data: data.value
+      })
+      return
+    }
+    if (topic === `${this.config.topic}/hint/counter`) {
+      this.webContents.send('hint:counter', {
+        roomId: this.room.id,
+        counter: data.value
+      })
+      return
+    }
+
+    // Loop through every puzzle and see if the topic matches
+    Object.values(this.room.puzzles).forEach((puzzle) => {
+      // Puzzle connected
+      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/connected`) {
+        this.webContents.send('puzzle:connected', {
+          roomId: this.room.id,
+          puzzleId: puzzle.id,
+          connected: data.connected
+        })
+        return
+      }
+      // Puzzle state
+      if (topic === `${this.room.mqtt.topic}/${puzzle.subtopic}/state`) {
+        // Send the puzzle state update to the renderer process
+        this.webContents.send('puzzle:state', {
+          roomId: this.room.id,
+          puzzleId: puzzle.id,
+          state: data.state
+        })
+        return
+      }
+    })
   }
 }

@@ -8,8 +8,14 @@ import { EscapeRoom } from '@shared/types/escape-room'
 import { createPuzzleSlice, PuzzleSlice } from './slices/puzzleSlice'
 import { Puzzle } from '@shared/types/puzzle'
 import { createTimerSlice, TimerSlice } from './slices/timerSlice'
+import { createHintSlice, HintSlice } from './slices/hintSlice'
 
-type StoreState = VenueSlice & EscapeRoomSlice & UISlice & PuzzleSlice & TimerSlice
+export type StoreState = VenueSlice &
+  EscapeRoomSlice &
+  UISlice &
+  PuzzleSlice &
+  TimerSlice &
+  HintSlice
 
 export const useVenueStore = create<StoreState>()(
   immer((...a) => ({
@@ -17,7 +23,8 @@ export const useVenueStore = create<StoreState>()(
     ...createEscapeRoomSlice(...a),
     ...createUISlice(...a),
     ...createPuzzleSlice(...a),
-    ...createTimerSlice(...a)
+    ...createTimerSlice(...a),
+    ...createHintSlice(...a)
   }))
 )
 

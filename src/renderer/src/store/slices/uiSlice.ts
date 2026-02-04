@@ -1,8 +1,5 @@
 import { StateCreator } from 'zustand'
-import { EscapeRoomSlice } from './escapeRoomSlice'
-import { VenueSlice } from './venueSlice'
-import { PuzzleSlice } from './puzzleSlice'
-import { TimerSlice } from './timerSlice'
+import { StoreState } from '../venueStore'
 
 export interface UISlice {
   // State
@@ -15,12 +12,9 @@ export interface UISlice {
   clearError(): void
 }
 
-export const createUISlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
-  [['zustand/immer', never]],
-  [],
-  UISlice
-> = (set) => ({
+export const createUISlice: StateCreator<StoreState, [['zustand/immer', never]], [], UISlice> = (
+  set
+) => ({
   // Initial state
   loading: false,
   error: null,

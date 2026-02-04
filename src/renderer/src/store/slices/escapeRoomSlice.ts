@@ -1,10 +1,7 @@
 import { EscapeRoom } from '@shared/types/escape-room'
 import { Puzzle } from '@shared/types/puzzle'
 import { StateCreator } from 'zustand'
-import { VenueSlice } from './venueSlice'
-import { PuzzleSlice } from './puzzleSlice'
-import { UISlice } from './uiSlice'
-import { TimerSlice } from './timerSlice'
+import { StoreState } from '../venueStore'
 
 export interface EscapeRoomSlice {
   // Selectors
@@ -15,7 +12,7 @@ export interface EscapeRoomSlice {
 }
 
 export const createEscapeRoomSlice: StateCreator<
-  UISlice & VenueSlice & EscapeRoomSlice & PuzzleSlice & TimerSlice,
+  StoreState,
   [['zustand/immer', never]],
   [],
   EscapeRoomSlice
