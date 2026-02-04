@@ -1,5 +1,4 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { config } from 'dotenv'
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
@@ -7,9 +6,6 @@ import { registerAllHandlers } from './handlers'
 import { initSupabase } from './services/supabase'
 import { mqttManager } from './services/mqtt'
 import { autoUpdater } from 'electron-updater'
-
-// Load environment variables from .env file
-config({ quiet: true })
 
 function createWindow(): void {
   // Create the browser window.

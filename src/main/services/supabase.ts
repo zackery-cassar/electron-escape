@@ -8,8 +8,8 @@ let supabaseClient: SupabaseClient<Database> | null = null
  * Call this once when the app starts
  */
 export function initSupabase(): SupabaseClient<Database> {
-  const supabaseUrl = process.env.SUPABASE_URL
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
+  const supabaseUrl = 'https://csdimbgygebenosflait.supabase.co'
+  const supabaseAnonKey = 'sb_publishable_IleSt_YaTfILSg4ApaoLRA_vuggtukm'
 
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error(
