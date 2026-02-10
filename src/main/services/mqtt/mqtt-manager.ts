@@ -11,7 +11,14 @@ export class MqttManager {
 
     this.clients.set(id, client)
     console.log(`[MqttManager] Added client with id ${id}.`)
-    client.connect() // Connect the client as well
+
+    // Connect the client and handle errors
+    try {
+      await client.connect()
+    } catch (error) {
+      console.error(`[MqttManager] Failed to connect client ${id}:`, error)
+      // Keep the client in the map even if connection fails - it will attempt to reconnect
+    }
   }
 
   /**

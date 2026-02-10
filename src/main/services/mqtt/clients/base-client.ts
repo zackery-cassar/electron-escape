@@ -23,7 +23,17 @@ export abstract class BaseClient {
     if (this.client && this.client.connected) return // Already connected
 
     return new Promise((resolve, reject) => {
-      const brokerUrl = `mqtt://${this.config.brokerHost}:${this.config.brokerPort}` // Construct the broker URL
+      // For macOS compatibility, append .local if it's a hostname (not an IP)
+      let host = this.config.brokerHost
+      if (process.platform === 'darwin') {
+        const isIP = /^(\d{1,3}\.){3}\d{1,3}$/.test(host)
+        if (!isIP && !host.endsWith('.local')) {
+          host += '.local'
+        }
+      }
+
+      // Construct the broker URL
+      const brokerUrl = `mqtt://${host}:${this.config.brokerPort}`
 
       // Create a new MQTT client instance and connect
       this.client = mqtt.connect(brokerUrl, {
