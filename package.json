@@ -18,7 +18,8 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win -p always --x64",
     "build:mac": "electron-vite build && electron-builder --mac -p always",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "build:all": "npm run build && npm run build:win && npm run build:mac"
   },
   "build": {
     "publish": [
