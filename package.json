@@ -27,7 +27,10 @@
         "owner": "zackery-cassar",
         "repo": "electron-escape"
       }
-    ]
+    ],
+    "mac": {
+      "identity": null
+    }
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
