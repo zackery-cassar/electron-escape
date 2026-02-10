@@ -17,7 +17,6 @@ export function TimerTooltip({ timer, children }: TimerTooltipProps): React.JSX.
       <Tooltip.Portal>
         <Tooltip.Content
           side="bottom"
-          align="start"
           sideOffset={5}
           className="flex max-w-xs flex-col rounded-lg border border-[white]/15 bg-[#1D2022] px-3 py-2 text-[12px] text-white"
         >
