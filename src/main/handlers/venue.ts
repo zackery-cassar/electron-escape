@@ -14,12 +14,10 @@ export function registerVenueHandlers(): void {
 
       // Initialize MQTT clients for all escape rooms in the venue
       if (venue) {
-        await Promise.all(
-          Object.values(venue.rooms).map(async (room) => {
-            const newClient = new EscapeRoomClient(room.id, room.mqtt, webContents, room)
-            await mqttManager.addClient(room.id, newClient)
-          })
-        )
+        Object.values(venue.rooms).forEach(async (room) => {
+          const newClient = new EscapeRoomClient(room.id, room.mqtt, webContents, room)
+          await mqttManager.addClient(room.id, newClient)
+        })
       }
 
       return { success: true, data: venue }

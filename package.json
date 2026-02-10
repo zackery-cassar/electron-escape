@@ -1,6 +1,6 @@
 {
   "name": "electron-escape",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
@@ -16,8 +16,8 @@
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win -p always",
-    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:win": "npm run build && electron-builder --win -p always --x64",
+    "build:mac": "electron-vite build && electron-builder --mac -p always",
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "build": {
