@@ -5,6 +5,7 @@ import { EditableTimer } from './EditableTimer'
 import { ResetTimerButton } from './ResetTimerButton'
 import { StartPauseTimerButton } from './StartPauseTimerButton'
 import { TimerContextMenu } from './TimerContextMenu'
+import { TimerTooltip } from './TimerTooltip'
 
 type TimerProps = {
   timer: TimerType
@@ -17,11 +18,13 @@ export function Timer({ timer }: TimerProps): React.JSX.Element {
 
       <Separator className="h-full w-0.5" />
 
-      <TimerContextMenu timer={timer}>
-        <div className="inline-block px-2 text-4xl font-bold">
-          <EditableTimer timer={timer} />
-        </div>
-      </TimerContextMenu>
+      <TimerTooltip timer={timer}>
+        <TimerContextMenu timer={timer}>
+          <div className="inline-block px-2 text-4xl font-bold">
+            <EditableTimer timer={timer} />
+          </div>
+        </TimerContextMenu>
+      </TimerTooltip>
 
       <Separator className="h-full w-0.5" />
 
