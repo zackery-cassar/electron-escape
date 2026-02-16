@@ -6,14 +6,22 @@ import { ActivateFinishPuzzleButton } from './ActivateFinishPuzzleButton'
 import { ResetPuzzleButton } from './ResetPuzzleButton'
 import { HintButton } from '@renderer/features/hints/components/HintButton'
 import { ConnectionStatus } from '@renderer/components/ui/status/ConnectionStatus'
+import { State } from '@shared/types/state'
+import { cn } from '@renderer/utils/cn'
 
 type PuzzleCardProps = {
   puzzle: Puzzle
 }
 
 export function PuzzleCard({ puzzle }: PuzzleCardProps): React.JSX.Element {
+  const isFinished = puzzle.state == State.FINISHED
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-[#5B678E]/43 bg-white/5 p-3">
+    <div
+      className={cn(
+        'flex flex-col gap-4 rounded-lg border p-3',
+        isFinished ? 'border-green-500/50 bg-green-500/10' : 'border-[#5B678E]/43 bg-white/5'
+      )}
+    >
       <div className="grid grid-cols-[1fr_1fr]">
         <div className="flex flex-col">
           <div className="flex items-center gap-3">
