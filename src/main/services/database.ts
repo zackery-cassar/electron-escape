@@ -65,6 +65,7 @@ export async function fetchVenue(venueId: string): Promise<Venue | null> {
                     order: hint.order,
                     sent: false
                   })),
+                solution: puzzle.solution || undefined,
                 state: State.UNKNOWN,
                 connected: false
               }

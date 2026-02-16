@@ -124,6 +124,7 @@ export type Database = {
           is_tech: boolean
           name: string
           order: number
+          solution: string | null
           subtopic: string
         }
         Insert: {
@@ -132,6 +133,7 @@ export type Database = {
           is_tech?: boolean
           name: string
           order: number
+          solution?: string | null
           subtopic: string
         }
         Update: {
@@ -140,6 +142,7 @@ export type Database = {
           is_tech?: boolean
           name?: string
           order?: number
+          solution?: string | null
           subtopic?: string
         }
         Relationships: [

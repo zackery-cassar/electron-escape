@@ -8,6 +8,7 @@ export interface Puzzle {
   subtopic: string // MQTT subtopic for the puzzle
   isTech: boolean // Whether the puzzle is a tech puzzle or not
   hints: Hint[] // List of hints associated with the puzzle
+  solution?: string // Optional solution for the puzzle
 
   // Runtime properties
   state: State // Current state of the puzzle
