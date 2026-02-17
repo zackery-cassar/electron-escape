@@ -1,10 +1,10 @@
+import { WarningAlert } from '@renderer/components/ui/alerts/WarningAlert'
 import { ProgressBar } from '@renderer/components/ui/progress-bar'
+import { parseTime } from '@renderer/features/timer/utils/parseTime'
 import { EscapeRoom } from '@shared/types/escape-room'
 import { State } from '@shared/types/state'
 import React from 'react'
 import { SidebarItem } from '../SidebarItem'
-import { parseTime } from '@renderer/features/timer/utils/parseTime'
-import { WarningIcon } from '@renderer/components/ui/icons'
 
 type EscapeRoomItemProps = {
   room: EscapeRoom
@@ -20,7 +20,7 @@ export function EscapeRoomItem({ room }: EscapeRoomItemProps): React.JSX.Element
       <div className="mb-0.5 flex justify-between">
         <h4>{room.name}</h4>
         <div className="flex justify-end gap-2">
-          {parseTime(room.timer.timeRemaining) < parseTime('00:05:00') && <WarningIcon />}
+          {parseTime(room.timer.timeRemaining) < parseTime('00:05:00') && <WarningAlert />}
           <span className="font-mono">{room.timer.timeRemaining}</span>
         </div>
       </div>
