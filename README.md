@@ -1,59 +1,55 @@
-# electron-escape
-
-An Electron application with React and TypeScript
-
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
-```bash
-$ npm install
-```
-
-### Development
-
-```bash
-$ npm run dev
-```
-
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+# Electron Escape
 
 
-npm install tailwindcss @tailwindcss/vite
-npm install react-router-dom
-npm install clsx
-npm instal tailwind-merge
-npm install @fontsource/inter
-npm install radix-ui
-npm install ldrs
-npm install -D prettier prettier-plugin-tailwindcss
+Settings structure
+
+Venue settings
+Name
+Login details etc
+
+Escape Room settings
+- List of escape rooms
+- Each escape room item leads to that escape rooms details page
+- Add escape room button underneat
+
+Mqtt broker settings
+List mqtt broker
 
 
+-----
+
+Escape room details
+- delete escape room button with 2 prompt verification
+- Escape room name
+- Duration
+- escape room topic
+- list of puzzles (optional)
+- order (optional but recommended)
+- mqtt broker selection
 
 
+-----
+
+Mqtt broker details:
+- delete mqtt broker button that only works if an escape room doesn't exist with it
+- mqtt broker hostname or local ip address 
+- mqtt port
+
+------
 
 
+Puzzle details:
+- delete puzzle button with 2 prompt verification
+- Puzzle name
+- Puzzle topic
+- is tech toggle
+- puzzle solution (optional)
+- list of hints (optional)
+- order (optional but recommended)
 
+Hint detail:
+- delete hints without 2 prompt verification
+- hint title
+- hint content (actual hint)
+- order (optional but recommended)
 
-
-
-
-TODO:
-- [ ] Make connection data for puzzles show unknown if the server itself is offline
-- [x] Add full hint display when hovering over a hint
-- [ ] Add quick hint send functionality
