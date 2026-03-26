@@ -1,6 +1,7 @@
 import { Hint } from '@shared/types/hint'
 import React from 'react'
 import { HintTooltip } from './HintTooltip'
+import { useVenueStore } from '@renderer/store/venueStore'
 
 type HintProps = {
   roomId: string
@@ -8,8 +9,15 @@ type HintProps = {
 }
 
 export function HintButton({ roomId, hint }: HintProps): React.JSX.Element {
+  const setHintInputText = useVenueStore((state) => state.setHintInputText)
+
   const handleClick = (): void => {
     window.api.hints.send(roomId, hint.content)
+  }
+
+  const handleContextMenu = (e: React.MouseEvent): void => {
+    e.preventDefault()
+    setHintInputText(roomId, hint.content)
   }
 
   return (
@@ -17,6 +25,7 @@ export function HintButton({ roomId, hint }: HintProps): React.JSX.Element {
       <button
         className="cursor-pointer rounded-lg border border-white px-2 py-1 text-[12px]"
         onClick={handleClick}
+        onContextMenu={handleContextMenu}
       >
         <div className="flex gap-2">
           <div className="size-4 items-center justify-center rounded-full bg-white text-black/50">

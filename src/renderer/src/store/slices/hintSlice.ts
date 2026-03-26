@@ -6,8 +6,11 @@ import { UISlice } from './uiSlice'
 import { VenueSlice } from './venueSlice'
 
 export interface HintSlice {
+  hintInputText: Record<string, string>
   updateHintCounter: (roomId: string, counter: number) => void
   updateCurrentHint: (roomId: string, newHint: string) => void
+  setHintInputText: (roomId: string, text: string) => void
+  clearHintInputText: (roomId: string) => void
 }
 
 export const createHintSlice: StateCreator<
@@ -16,6 +19,8 @@ export const createHintSlice: StateCreator<
   [],
   HintSlice
 > = (set) => ({
+  hintInputText: {},
+
   updateHintCounter: (roomId: string, counter: number) => {
     set((state) => {
       if (!state.venue) return
@@ -24,12 +29,25 @@ export const createHintSlice: StateCreator<
       room.hintCounter = counter
     })
   },
+
   updateCurrentHint: (roomId: string, newHint: string) => {
     set((state) => {
       if (!state.venue) return
       const room = state.venue.rooms[roomId]
       if (!room) return
       room.currentHint = newHint
+    })
+  },
+
+  setHintInputText: (roomId: string, text: string) => {
+    set((state) => {
+      state.hintInputText[roomId] = text
+    })
+  },
+
+  clearHintInputText: (roomId: string) => {
+    set((state) => {
+      state.hintInputText[roomId] = ''
     })
   }
 })
