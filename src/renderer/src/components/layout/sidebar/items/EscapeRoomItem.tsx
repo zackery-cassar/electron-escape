@@ -1,4 +1,4 @@
-import { WarningAlert } from '@renderer/components/ui/alerts/WarningAlert'
+import { CriticalAlert, TimerAlert } from '@renderer/components/ui/alerts'
 import { ProgressBar } from '@renderer/components/ui/progress-bar'
 import { parseTime } from '@renderer/features/timer/utils/parseTime'
 import { EscapeRoom } from '@shared/types/escape-room'
@@ -20,7 +20,11 @@ export function EscapeRoomItem({ room }: EscapeRoomItemProps): React.JSX.Element
       <div className="mb-0.5 flex justify-between">
         <h4>{room.name}</h4>
         <div className="flex justify-end gap-2">
-          {parseTime(room.timer.timeRemaining) < parseTime('00:05:00') && <WarningAlert />}
+          {!room.connected ? (
+            <CriticalAlert />
+          ) : (
+            parseTime(room.timer.timeRemaining) < parseTime('00:05:00') && <TimerAlert />
+          )}
           <span className="font-mono">{room.timer.timeRemaining}</span>
         </div>
       </div>
